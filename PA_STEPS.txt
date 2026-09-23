@@ -1,0 +1,9 @@
+﻿PythonAnywhere Upload Steps:
+============================
+1. Sign up (email only, no phone/card)
+2. Go to Files tab
+3. Upload: server.py, requirements.txt
+4. Go to Web tab -> Add new web app -> Flask
+5. Edit WSGI file to use our code
+6. Install packages: pip install yt-dlp imageio-ffmpeg
+7. Reload web app
