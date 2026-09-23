@@ -1,0 +1,9 @@
+﻿downloads/
+functions/
+__pycache__/
+*.pyc
+.firebaserc
+firebase.json
+README.md
+gh_*.txt
+*.err

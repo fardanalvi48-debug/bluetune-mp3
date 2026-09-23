@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlueTune - YouTube to MP3 Converter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-logo">
+            <span class="logo-icon">&#9835;</span>
+            <span class="logo-text">Blue<span class="highlight">Tune</span></span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#how">How It Works</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#faq">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>YouTube to <span class="gradient-text">MP3 Converter</span></h1>
+            <p class="subtitle">Paste any YouTube link and get high quality MP3 audio in seconds. Fast, free &amp; unlimited.</p>
+
+            <div class="converter-box">
+                <div class="input-group">
+                    <input type="text" id="urlInput" placeholder="Paste YouTube link here..." autocomplete="off">
+                    <button id="convertBtn" onclick="convert()">
+                        <span class="btn-text">Convert</span>
+                        <span class="btn-loader" id="loader"></span>
+                    </button>
+                </div>
+                <p class="hint">Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ</p>
+            </div>
+
+            <!-- Result -->
+            <div class="result-box" id="resultBox">
+                <div class="video-info">
+                    <img id="thumbImg" src="" alt="thumbnail">
+                    <div class="meta">
+                        <h3 id="videoTitle">Video Title</h3>
+                        <p id="videoDuration">Duration</p>
+                    </div>
+                </div>
+                <div class="quality-options">
+                    <button class="q-btn active" data-quality="128" onclick="selectQuality(this)">128 kbps</button>
+                    <button class="q-btn" data-quality="192" onclick="selectQuality(this)">192 kbps</button>
+                    <button class="q-btn" data-quality="320" onclick="selectQuality(this)">320 kbps</button>
+                </div>
+                <a id="downloadBtn" href="javascript:void(0)" class="download-btn" onclick="startConvert()">
+                    &#8681; Convert &amp; Download MP3
+                </a>
+                <div id="altLinks" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;"></div>
+            </div>
+
+            <div class="error-msg" id="errorMsg"></div>
+        </div>
+        <div class="hero-bg">
+            <div class="circle c1"></div>
+            <div class="circle c2"></div>
+            <div class="circle c3"></div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="section" id="how">
+        <h2 class="section-title">How It <span class="gradient-text">Works</span></h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Copy Link</h3>
+                <p>Copy the YouTube video link you want to convert.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Paste &amp; Convert</h3>
+                <p>Paste the link above and hit the Convert button.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Download MP3</h3>
+                <p>Choose quality and download your HD audio file.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section" id="features">
+        <h2 class="section-title">Why <span class="gradient-text">BlueTune</span>?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="f-icon">&#9889;</div>
+                <h3>Lightning Fast</h3>
+                <p>Convert videos in seconds with our optimized engine.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">&#127911;</div>
+                <h3>HD Quality</h3>
+                <p>Get crystal clear 320kbps high bitrate audio output.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">&#128274;</div>
+                <h3>100% Free</h3>
+                <p>No registration, no hidden fees. Completely free forever.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">&#128241;</div>
+                <h3>All Devices</h3>
+                <p>Works on mobile, tablet, laptop and desktop browsers.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">&#128268;</div>
+                <h3>No Software</h3>
+                <p>Everything runs in your browser. No app install needed.</p>
+            </div>
+            <div class="feature-card">
+                <div class="f-icon">&#128171;</div>
+                <h3>Unlimited</h3>
+                <p>Convert as many songs as you want without any limits.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+        <h2 class="section-title">Frequently <span class="gradient-text">Asked Questions</span></h2>
+        <div class="faq-list">
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Is BlueTune free to use?<span class="arrow">&#9660;</span></div>
+                <div class="faq-a">Yes, BlueTune is 100% free. You can convert unlimited YouTube videos to MP3 without any cost.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">What audio quality do I get?<span class="arrow">&#9660;</span></div>
+                <div class="faq-a">You can choose between 128kbps, 192kbps and 320kbps (HD) quality based on your preference.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Do I need to install any software?<span class="arrow">&#9660;</span></div>
+                <div class="faq-a">No. Everything works directly in your browser on any device - phone, tablet or computer.</div>
+            </div>
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-q">Is there a limit on conversions?<span class="arrow">&#9660;</span></div>
+                <div class="faq-a">No limits at all. Convert as many songs as you want, as many times as you want.</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-logo">
+            <span class="logo-icon">&#9835;</span>
+            Blue<span class="highlight">Tune</span>
+        </div>
+        <p>&copy; 2026 BlueTune. All rights reserved.</p>
+        <p class="disclaimer">This tool is for personal use only. Please respect copyright laws.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
