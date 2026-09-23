@@ -122,9 +122,32 @@ async function startConvert() {
             throw new Error(msg);
         }
 
-        const blob = await res.blob();
+        const job = await res.json();
+        const jobId = job.jobId;
+        if (!jobId) throw new Error("No job ID returned");
+
+        let status = "starting";
+        for (let i = 0; i < 120; i++) {
+            await new Promise((r) => setTimeout(r, 1500));
+            const sres = await fetch(`/api/status/${jobId}`);
+            const sdata = await sres.json();
+            status = sdata.status;
+
+            if (status === "done") break;
+            if (status === "error") throw new Error(sdata.error || "Conversion failed");
+
+            const pct = Math.min(95, Math.round((i / 120) * 100));
+            btn.innerHTML = `⏳ Converting... ${pct}%`;
+        }
+
+        if (status !== "done") throw new Error("Conversion timed out");
+
+        const dres = await fetch(`/api/download/${jobId}`);
+        if (!dres.ok) throw new Error("Download failed");
+
+        const blob = await dres.blob();
         const filename =
-            filenameFromDisposition(res.headers.get("Content-Disposition")) ||
+            filenameFromDisposition(dres.headers.get("Content-Disposition")) ||
             `${currentData.title || "audio"}.mp3`;
 
         const a = document.createElement("a");
