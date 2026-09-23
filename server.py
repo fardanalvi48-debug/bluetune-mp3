@@ -39,9 +39,33 @@ def extract_video_id(url):
     return m.group(1) if m else None
 
 
+BYPASS_OPTS = {
+    "extractor_args": {
+        "youtube": {
+            "player_client": ["android", "ios", "mweb", "tv_embedded"],
+        }
+    },
+    "player_client": ["android", "ios", "mweb"],
+    "no_check_certificates": True,
+    "geo_bypass": True,
+    "geo_bypass_country": "US",
+    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+    "referer": "https://www.youtube.com/",
+    "http_headers": {
+        "Accept-Language": "en-US,en;q=0.9",
+        "Origin": "https://www.youtube.com",
+    },
+}
+
+
 def get_info(video_id):
     url = f"https://www.youtube.com/watch?v={video_id}"
-    opts = {"quiet": True, "no_warnings": True, "skip_download": True}
+    opts = {
+        "quiet": True,
+        "no_warnings": True,
+        "skip_download": True,
+        **BYPASS_OPTS,
+    }
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=False)
     return {
@@ -71,6 +95,7 @@ def convert_audio(job_id, video_id, quality, title):
                 "preferredquality": abr,
             }
         ],
+        **BYPASS_OPTS,
     }
     if FFMPEG_PATH:
         opts["ffmpeg_location"] = FFMPEG_PATH
