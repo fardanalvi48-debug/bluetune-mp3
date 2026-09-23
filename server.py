@@ -42,19 +42,21 @@ def extract_video_id(url):
 BYPASS_OPTS = {
     "extractor_args": {
         "youtube": {
-            "player_client": ["android", "ios", "mweb", "tv_embedded"],
+            "player_client": ["android_vr", "ios", "mweb", "tv_embedded", "android"],
         }
     },
-    "player_client": ["android", "ios", "mweb"],
     "no_check_certificates": True,
     "geo_bypass": True,
     "geo_bypass_country": "US",
-    "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-    "referer": "https://www.youtube.com/",
+    "user_agent": "com.google.android.youtube/19.09.37 (Linux; U; Android 11) gzip",
     "http_headers": {
         "Accept-Language": "en-US,en;q=0.9",
-        "Origin": "https://www.youtube.com",
+        "X-YouTube-Client-Name": "3",
+        "X-YouTube-Client-Version": "19.09.37",
     },
+    "sleep_interval": 1,
+    "max_sleep_interval": 3,
+    "retries": 3,
 }
 
 
