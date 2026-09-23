@@ -1,4 +1,4 @@
-﻿import os
+import os
 import re
 import json
 import threading
@@ -39,35 +39,9 @@ def extract_video_id(url):
     return m.group(1) if m else None
 
 
-BYPASS_OPTS = {
-    "extractor_args": {
-        "youtube": {
-            "player_client": ["android_vr", "ios", "mweb", "tv_embedded", "android"],
-        }
-    },
-    "no_check_certificates": True,
-    "geo_bypass": True,
-    "geo_bypass_country": "US",
-    "user_agent": "com.google.android.youtube/19.09.37 (Linux; U; Android 11) gzip",
-    "http_headers": {
-        "Accept-Language": "en-US,en;q=0.9",
-        "X-YouTube-Client-Name": "3",
-        "X-YouTube-Client-Version": "19.09.37",
-    },
-    "sleep_interval": 1,
-    "max_sleep_interval": 3,
-    "retries": 3,
-}
-
-
 def get_info(video_id):
     url = f"https://www.youtube.com/watch?v={video_id}"
-    opts = {
-        "quiet": True,
-        "no_warnings": True,
-        "skip_download": True,
-        **BYPASS_OPTS,
-    }
+    opts = {"quiet": True, "no_warnings": True, "skip_download": True}
     with yt_dlp.YoutubeDL(opts) as ydl:
         info = ydl.extract_info(url, download=False)
     return {
@@ -97,7 +71,6 @@ def convert_audio(job_id, video_id, quality, title):
                 "preferredquality": abr,
             }
         ],
-        **BYPASS_OPTS,
     }
     if FFMPEG_PATH:
         opts["ffmpeg_location"] = FFMPEG_PATH
